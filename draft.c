@@ -9,13 +9,13 @@
 typedef struct s_char_list
 {
 	char				c;
-	int					offset;
+	int					offset; // offset is probably unnecessary since read() remebers the offset
 	struct s_char_list	*next;
 } t_char_list;
 
 
-/*
-   Save the previous offset of get_next_line in files.
+/* Save the previous offset for files when calling get_next_line
+   function.
 
    int fd; int offset; struct s_fd_offset_list *next;
 
@@ -34,7 +34,7 @@ typedef struct s_fd_offset_list
 
 /* Returns a pointer to the character item of the tail of the list,
    adds a new node to the end of the list when necessary.
-   
+
    Returns NULL pointer in case of error. */
 char *append_to_list(t_char_list *list)
 {
@@ -51,7 +51,7 @@ char *append_to_list(t_char_list *list)
 
 /* Concatenate all characters from the linked list into one string. 
    Returns NULL upon error. */
-char *list_to_string(t_char_list *list)
+char	*list_to_string(t_char_list *list)
 {
 	int		len;
 	int		i;
@@ -82,16 +82,24 @@ char	*get_next_line(int fd)
 	int						offset;
 	char					c;
 	char					*buffer;
+	char					*string;
 	t_char_list				list;
-	static t_fd_offset_list fd_offset_list;
+	static t_fd_offset_list	fd_offset_list;
 
+	list = (t_char_list) {'\0', 0, NULL};
 	if (is_last_fd(&fd_offset_list, fd) == false)
-		offset = get_offset(fd_offset_list, fd);
+		offset = get_offset(&fd_offset_list, fd);
 	c = '0';
 	buffer = &c;
 	while (c && c != '\n')
 	{
-		;
+		read(STDIN_FILENO, buffer, 1);
+		*(append_to_list(&list)) = *buffer;
+		string = list_to_string(&list);
+		if (!string)
+			return (NULL);
+		if (*buffer == '\n')
+			break;
 	}
 
 }
@@ -101,17 +109,8 @@ int main(void)
 	char c;
 	char *p = &c;
 	char *s;
-	t_char_list list = (t_char_list) {'\0', NULL};
-	while(1)
-	{
-		read(STDIN_FILENO, p, 1);
-		*(append_to_list(&list)) = *p;
-		s = list_to_string(&list);
-		if (!s)
-			return (-1);
-		if (*p == '\n')
-			break;
-	}
+	t_char_list list = (t_char_list) {'\0', 0, NULL};
+	s = get_next_line(STDIN_FILENO);
 	write(STDOUT_FILENO, ">>>>\n", strlen(">>>>\n"));
 	write(STDOUT_FILENO, s, strlen(s));
 	free(s);
