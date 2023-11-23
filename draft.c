@@ -71,7 +71,7 @@ char	*get_nex_line(int fd)
 
 // Finished
 
-/* Copy the string after the first \n into the linkd list and to
+/* Copy the string after the first \n into the linked list and to
    the node of the corresponding file descriptor. Create and append
    the node if it does not exist.
    
@@ -81,26 +81,23 @@ static int	append_excess_to_fd_buffer_list
 {
 	char	*string;
 	size_t	start;
-	size_t	end;
 	t_fd_buffer_list	*this_node;
 	t_fd_buffer_list	*new_node;
 
 	this_node = *head;
 
-	// Copy the content after first '\n'
+	// Copy the content after first '\n',
+	// or end function if there is nothing found after first '\n'
 	start = 0;
-	while (buffer[start])
-	{
-		if (buffer[start] == '\n')
-		{
-			string = ft_strdup(&buffer[start + 1]);
-			break;
-		}
+	string = NULL;
+	while (buffer[start] && buffer[start] != '\n')
 		start++;
-	}
+	if (buffer[start] == '\0')
+		return (-1);
+	string = ft_strdup(&buffer[start + 1]);
 	if (string == NULL)
 		return (-1);
-	
+
 	// Search for node with correct fd to save the information
 	if (this_node)
 	{
@@ -160,7 +157,7 @@ static int	get_next_line_from_fd_buffer_list
 	if (fd_buffer_list == NULL || fd < 0 || buffer == NULL)
 		return (0);
 
-	// Find the node with correct file descripotr, end function cannot find
+	// Find the node with correct file descriptor, end function cannot find
 	this_node = fd_buffer_list;
 	while (this_node)
 	{
@@ -179,6 +176,8 @@ static int	get_next_line_from_fd_buffer_list
 		buffer[i] = string[i];
 		i++;
 	}
+	if (string[i] == '\n')
+		buffer[i++] = '\n';
 	buffer[i] = '\0';
 	write_to_buffer_length = i;
 
@@ -202,7 +201,6 @@ static int	get_next_line_from_fd_buffer_list
    Returns 0 upon success and -1 upon failure */
 static int	append_current_line_to_list(t_char_list **head, char *buffer)
 {
-	size_t	len;
 	size_t	i;
 	char	*string;
 	t_char_list	*this_node;
