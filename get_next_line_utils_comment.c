@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line_utils.c                              :+:      :+:    :+:   */
+/*   get_next_line_utils_comment.c                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: Philip Li <LJHR.UK@outlook.com>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/18 01:23:06 by juli              #+#    #+#             */
-/*   Updated: 2023/11/22 22:19:46 by Philip Li        ###   ########.fr       */
+/*   Updated: 2023/11/24 00:49:33 by Philip Li        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,10 +63,10 @@ char	*ft_strchr(const char *s, int c)
 }
 
 /* Free the entire list and the content of each node*/
-int	free_list(t_char_list *list)
+int	free_list(t_str_list *list) // [ ] free_list: new struct refactor
 {
-	t_char_list	*this_node;
-	t_char_list	*next_node;
+	t_str_list	*this_node;
+	t_str_list	*next_node;
 
 	this_node = list;
 	while (this_node)
@@ -90,4 +90,29 @@ int	ft_strlen(const char *s)
 	while (s[len])
 		len++;
 	return (len);
+}
+
+/* Copy from (src) to (dst), make sure to null-terminate the string
+
+   Parameter
+   size: the size of (dst) array 
+   
+   Return Value
+   The length of (src) string */
+size_t	ft_strlcpy(char *dst, const char *src, size_t size)
+{
+	size_t	i;
+	size_t	total_len;
+
+	i = 0;
+	total_len = ft_strlen((char *)src);
+	if (size == 0)
+		return (total_len);
+	while (i < size - 1 && src[i])
+	{
+		dst[i] = src[i];
+		i++;
+	}
+	dst[i] = '\0';
+	return (total_len);
 }
