@@ -6,7 +6,7 @@
 /*   By: Philip Li <LJHR.UK@outlook.com>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/22 19:57:59 by Philip Li         #+#    #+#             */
-/*   Updated: 2023/11/24 01:32:51 by Philip Li        ###   ########.fr       */
+/*   Updated: 2023/11/24 14:09:33 by Philip Li        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,6 +74,15 @@ static int	append_excess_to_fd_str_list(t_fd_str_list **head,
 
 	this_node = *head;
 	// Search for node with correct fd to save the information
+	// 1. Found 2. Not found or emtpy head
+	if (head == NULL)
+	{
+		new_node = (t_fd_str_list *)malloc(sizeof(t_fd_str_list));
+		if (new_node == NULL)
+			return (-1);
+		new_node->fd = fd;
+		this_node->next = new_node;
+	}
 	while (this_node->fd != fd && this_node->next)
 		this_node = this_node->next;
 	// When the node cannot be found
@@ -85,13 +94,16 @@ static int	append_excess_to_fd_str_list(t_fd_str_list **head,
 			return (-1);
 		new_node->fd = fd;
 		this_node->next = new_node;
-		this_node = new_node;
 	}
 	// Copy the content after first \n into the node (strcpy)
 	i = 0;
+	while (buffer[i] && buffer[i] != '\n')
+		i++;
+	if (buffer[i] == '\n')
+		i++;
 	while (buffer[i])
 	{
-		this_node->str[i] = buffer[i];
+		new_node->str[i] = buffer[i];
 		if (buffer[i] == '\n')
 			break;
 		i++;
@@ -161,14 +173,17 @@ static int	append_current_line_to_list(t_str_list **head, char *buffer) // [x] a
 	new_node = (t_str_list *)malloc(sizeof(t_str_list));
 	if (new_node == NULL)
 		return (-1);
+	new_node->next = NULL;
 	// Copy the current line into the new node, attach the new node to linked list
 	i = 0;
-	while (buffer[i] && buffer[i] != '\n')
+	while (buffer[i])
 	{
 		new_node->str[i] = buffer[i];
+		if (buffer[i] == '\n')
+			break;
 		i++;
 	}
-	buffer[i] = '\0';
+	buffer[i + 1] = '\0';
 	if (*head == NULL)
 		*head = new_node;
 	else
