@@ -9,16 +9,16 @@ int main(void)
 	int fd2 = open("test2.txt", O_RDONLY);
 	char *s;
 
-	for (int i = 0; i < 5; i++)
+	for (int i = 0; i < 10; i++)
 	{
 		s = get_next_line(fd0);
-		printf("test0.txt:>>> (%s)", s);
+		printf("test0.txt:>>> \"%s\"\n", s);
 		free(s);
 		s = get_next_line(fd1);
-		printf("test1.txt:>>> (%s)", s);
+		printf("test1.txt:>>> \"%s\"\n", s);
 		free(s);
 		s = get_next_line(fd2);
-		printf("test2.txt:>>> (%s)", s);
+		printf("test2.txt:>>> \"%s\"\n", s);
 		free(s);
 	}
 }

@@ -6,34 +6,11 @@
 /*   By: Philip Li <LJHR.UK@outlook.com>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/18 01:23:06 by juli              #+#    #+#             */
-/*   Updated: 2023/11/24 01:16:48 by Philip Li        ###   ########.fr       */
+/*   Updated: 2023/11/24 19:01:23 by Philip Li        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
-
-/* Returns a copy of input string.
-
-   The copy needs to be freed after usage */
-char	*ft_strdup(const char *s)
-{
-	char	*new;
-	size_t	i;
-	size_t	len;
-
-	len = ft_strlen(s);
-	new = (char *)malloc((len + 1) * sizeof(char));
-	if (new == NULL)
-		return (NULL);
-	i = 0;
-	while (i < len)
-	{
-		new[i] = s[i];
-		i++;
-	}
-	new[i] = '\0';
-	return (new);
-}
 
 /* Set (n) bytes of memory to character (c) at given address (s) */
 void	*ft_memset(void *s, int c, size_t n)

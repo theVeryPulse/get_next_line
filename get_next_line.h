@@ -6,7 +6,7 @@
 /*   By: Philip Li <LJHR.UK@outlook.com>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/18 01:17:16 by juli              #+#    #+#             */
-/*   Updated: 2023/11/23 23:50:08 by Philip Li        ###   ########.fr       */
+/*   Updated: 2023/11/24 17:46:20 by Philip Li        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 # include <unistd.h>
 
 # ifndef BUFFER_SIZE
-#  define BUFFER_SIZE (16)
+#  define BUFFER_SIZE (25)
 # endif
 
 /* Linked list, each node contains the character content, its offset,
