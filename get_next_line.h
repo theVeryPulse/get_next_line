@@ -6,7 +6,7 @@
 /*   By: Philip Li <LJHR.UK@outlook.com>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/18 01:17:16 by juli              #+#    #+#             */
-/*   Updated: 2023/11/24 17:46:20 by Philip Li        ###   ########.fr       */
+/*   Updated: 2023/11/28 21:11:05 by Philip Li        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,14 +46,12 @@ typedef struct s_fd_str_list
 
 char	*get_next_line(int fd);
 
-char	*ft_strdup(const char *s);
-
-void	*ft_memset(void *s, int c, size_t n);
-
 char	*ft_strchr(const char *s, int c);
 
 int		free_list(t_str_list *list);
 
 int		ft_strlen(const char *s);
+
+int		total_strlen_from_list(t_str_list *list);
 
 #endif
