@@ -6,7 +6,7 @@
 /*   By: Philip Li <LJHR.UK@outlook.com>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/18 01:23:06 by juli              #+#    #+#             */
-/*   Updated: 2023/11/29 18:05:27 by Philip Li        ###   ########.fr       */
+/*   Updated: 2023/11/29 19:50:21 by Philip Li        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,6 +72,7 @@ void	read_until_eol_or_eof_and_save_excess(int fd, char *tmp_buffer,
 {
 	int			chars_read;
 
+	chars_read = 1;
 	while (!ft_strchr(tmp_buffer, '\n'))
 	{
 		chars_read = read(fd, tmp_buffer, BUFFER_SIZE);
@@ -82,5 +83,10 @@ void	read_until_eol_or_eof_and_save_excess(int fd, char *tmp_buffer,
 		if (ft_strchr(tmp_buffer, '\n'))
 			save_to_fd_buffer(fd_buffer,
 				ft_strchr(tmp_buffer, '\n') + 1);
+	}
+	if (chars_read == 0)
+	{
+		free(*fd_buffer);
+		*fd_buffer = NULL;
 	}
 }

@@ -6,7 +6,7 @@
 /*   By: Philip Li <LJHR.UK@outlook.com>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/22 19:57:59 by Philip Li         #+#    #+#             */
-/*   Updated: 2023/11/29 18:34:04 by Philip Li        ###   ########.fr       */
+/*   Updated: 2023/11/29 19:53:03 by Philip Li        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ char	*get_next_line(int fd)
 	static char	*fd_buffer_set[FD_MAX];
 	t_str_list	*list;
 
-	if (fd < 0 || fd > FD_MAX || BUFFER_SIZE <= 0)
+	if (fd < 0 || fd > FD_MAX - 1 || BUFFER_SIZE <= 0)
 		return (NULL);
 	list = NULL;
 	tmp_buffer = (char *)malloc((BUFFER_SIZE + 1) * sizeof(char));
