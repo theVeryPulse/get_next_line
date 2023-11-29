@@ -6,13 +6,13 @@
 /*   By: Philip Li <LJHR.UK@outlook.com>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/22 19:57:59 by Philip Li         #+#    #+#             */
-/*   Updated: 2023/11/24 18:53:47 by Philip Li        ###   ########.fr       */
+/*   Updated: 2023/11/29 01:20:09 by Philip Li        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
-static int	append_excess_to_fd_str_list(t_fd_str_list **head,
+static int	add_to_fd_str_list(t_fd_str_list **head,
 				int fd, char *buffer);
 
 static int	get_next_line_from_fd_str_list(t_fd_str_list *fd_str_list,
@@ -20,7 +20,7 @@ static int	get_next_line_from_fd_str_list(t_fd_str_list *fd_str_list,
 
 static int	append_current_line_to_list(t_str_list **head, char *buffer);
 
-static char	*list_to_string(t_str_list *list);
+static char	*list_to_line(t_str_list *list);
 
 char	*get_next_line(int fd)
 {
@@ -52,10 +52,10 @@ char	*get_next_line(int fd)
 		append_current_line_to_list(&list, buffer);
 		// Save the extra content after '\n' into static list if there is any
 		if(ft_strchr(buffer, '\n'))
-			append_excess_to_fd_str_list(&fd_str_list, fd, buffer);
+			add_to_fd_str_list(&fd_str_list, fd, buffer);
 	}
 	// Convert linked list into a string
-	string = list_to_string(list);
+	string = list_to_line(list);
 	// Free all space taken by the list
 	free_list(list);
 	return (string);
@@ -65,7 +65,7 @@ char	*get_next_line(int fd)
    file descriptor. Create the node if it does not exist.
    
    Returns 0 upon success and -1 upon error */
-static int	append_excess_to_fd_str_list(t_fd_str_list **head,
+static int	add_to_fd_str_list(t_fd_str_list **head,
 	int fd, char *buffer)
 {
 	size_t			i;
@@ -208,7 +208,7 @@ static int	append_current_line_to_list(t_str_list **head, char *buffer)
 /* Concatenate all content from a list into a single string 
 
    Returns NULL if the conversion fails. */
-static char	*list_to_string(t_str_list *list)
+static char	*list_to_line(t_str_list *list)
 {
 	char		*string;
 	size_t		len;

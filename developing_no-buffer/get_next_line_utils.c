@@ -6,7 +6,7 @@
 /*   By: Philip Li <LJHR.UK@outlook.com>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/18 01:23:06 by juli              #+#    #+#             */
-/*   Updated: 2023/11/28 22:33:43 by Philip Li        ###   ########.fr       */
+/*   Updated: 2023/11/29 02:05:19 by Philip Li        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,13 +28,13 @@ char	*ft_strchr(const char *s, int c)
 	return (NULL);
 }
 
-/* Free the entire list and the content of each node*/
-void	free_all(t_str_list *list, char *buffer)
+/* Free the space taken by the entire list.
+*/
+void	free_list(t_str_list *list)
 {
 	t_str_list	*this_node;
 	t_str_list	*next_node;
 
-	free(buffer);
 	this_node = list;
 	while (this_node)
 	{
@@ -46,7 +46,7 @@ void	free_all(t_str_list *list, char *buffer)
 
 /* Return the sum of lengths of all strings saved in the entire list.
 */
-int		total_strlen_from_list(t_str_list *list)
+int		line_len_from_list(t_str_list *list)
 {
 	int			i;
 	int			len;
@@ -57,7 +57,7 @@ int		total_strlen_from_list(t_str_list *list)
 	while (this_node)
 	{
 		i = 0;
-		while (this_node->str[i])
+		while (this_node->str[i] && this_node->str[i] != '\n')
 		{
 			i++;
 			len++;
@@ -65,4 +65,27 @@ int		total_strlen_from_list(t_str_list *list)
 		this_node = this_node->next;
 	}
 	return (len);
+}
+
+/* Return a pointer to a new node of t_str_list 
+   
+   Deep copy the string argument into the node
+*/
+t_str_list	*new_str_list_node(char *str, t_str_list *next)
+{
+	int	i;
+	t_str_list	*new_node;
+	
+	new_node = (t_str_list *)malloc(sizeof(t_str_list) * 1);
+	if (new_node == NULL)
+		return (NULL);
+	i = 0;
+	while (str[i])
+	{
+		new_node->str[i] = str[i];
+		i++;
+	}
+	new_node->str[i] = '\0';
+	new_node->next = next;
+	return (new_node);
 }
