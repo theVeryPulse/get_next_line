@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line.h                                    :+:      :+:    :+:   */
+/*   linkedlist_get_next_line.h                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: Philip Li <LJHR.UK@outlook.com>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/18 01:17:16 by juli              #+#    #+#             */
-/*   Updated: 2023/11/29 01:17:31 by Philip Li        ###   ########.fr       */
+/*   Updated: 2023/11/29 14:01:50 by Philip Li        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,9 @@
 
 # ifndef BUFFER_SIZE
 #  define BUFFER_SIZE (25)
+# endif
+# ifndef FD_MAX
+#  define FD_MAX (4096)
 # endif
 
 /* Linked list, each node contains the character content, its offset,
@@ -43,14 +46,16 @@ typedef struct s_fd_str_list
 	struct s_fd_str_list	*next;
 }	t_fd_str_list;
 
-char		*get_next_line(int fd);
+char	*get_next_line(int fd);
 
-char		*ft_strchr(const char *s, int c);
+char	*ft_strchr(const char *s, int c);
 
-void		free_list(t_str_list *list);
+int		free_list(t_str_list *list);
 
-int			line_len_from_list(t_str_list *list);
+int		ft_strlen(const char *s);
 
-t_str_list	*new_str_list_node(char *str, t_str_list *next);
+int		total_strlen_from_list(t_str_list *list);
+
+void	free_all(t_str_list *list, char *buffer);
 
 #endif
