@@ -6,7 +6,7 @@
 /*   By: Philip Li <LJHR.UK@outlook.com>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/18 01:23:06 by juli              #+#    #+#             */
-/*   Updated: 2023/11/30 14:37:06 by Philip Li        ###   ########.fr       */
+/*   Updated: 2023/11/30 15:39:19 by Philip Li        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,17 +32,17 @@ char	*ft_strchr(const char *s, int c)
    Then resets the pointer to NULL after.
 
    Does nothing to pointers already pointing to NULL. */
-void	_free_all(t_str_list **list, char **buffer)
+void	_free_and_set_to_null(t_str_list **list, char **buffer)
 {
 	t_str_list	*this_node;
 	t_str_list	*next_node;
 
-	if (*buffer)
+	if (buffer && *buffer)
 	{
 		free(*buffer);
 		*buffer = NULL;
 	}
-	if (*list)
+	if (list && *list)
 	{
 		this_node = *list;
 		while (this_node)
@@ -113,11 +113,10 @@ void	_read_until_eol_or_eof_and_save_excess(int fd, char *tmp_buffer,
 	}
 	if (chars_read == 0)
 	{
-		free(*fd_buffer);
-		*fd_buffer = NULL;
+		_free_and_set_to_null(NULL, fd_buffer);
 	}
 	else if (chars_read == -1)
 	{
-		_free_all(head, fd_buffer);
+		_free_and_set_to_null(head, fd_buffer);
 	}
 }

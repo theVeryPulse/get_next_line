@@ -6,7 +6,7 @@
 /*   By: Philip Li <LJHR.UK@outlook.com>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/18 01:17:16 by juli              #+#    #+#             */
-/*   Updated: 2023/11/30 14:25:55 by Philip Li        ###   ########.fr       */
+/*   Updated: 2023/11/30 15:32:29 by Philip Li        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ char	*ft_strchr(const char *s, int c);
 
 int		_total_strlen_from_list(t_str_list *list);
 
-void	_free_all(t_str_list **list, char **buffer);
+void	_free_and_set_to_null(t_str_list **list, char **buffer);
 
 void	_read_until_eol_or_eof_and_save_excess(int fd, char *tmp_buffer,
 			t_str_list **head, char **fd_buffer);
