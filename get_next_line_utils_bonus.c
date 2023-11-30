@@ -12,9 +12,10 @@
 
 #include "get_next_line.h"
 
-/* Return a pointer to the first character (c) that is found in (s)
+/* Returns a pointer to the first occurence of character (c) in the 
+   string (s).
 
-   Return NULL if no character (c) can be found */
+   Return NULL if character (c) is not found */
 char	*ft_strchr(const char *s, int c)
 {
 	while (*s)
@@ -28,7 +29,8 @@ char	*ft_strchr(const char *s, int c)
 	return (NULL);
 }
 
-/* Free the entire list and the content of each node*/
+/* Frees each node of the entire list. 
+   Also frees the provided buffer. */
 void	free_all(t_str_list *list, char *buffer)
 {
 	t_str_list	*this_node;
@@ -44,8 +46,11 @@ void	free_all(t_str_list *list, char *buffer)
 	}
 }
 
-/* Return the sum of lengths of all strings saved in the entire list.
-*/
+/* Calculates and returns the total length of all strings stored in 
+   the linked list.
+
+   Iterates through each node in the list and adds up the lengths of
+   the strings.*/
 int	total_strlen_from_list(t_str_list *list)
 {
 	int			i;
@@ -67,6 +72,19 @@ int	total_strlen_from_list(t_str_list *list)
 	return (len);
 }
 
+/* Reads from a file descriptor until encounters a newline character
+   or reaches the end of the file.
+
+   Saves any excess data read into buffers for the file descriptor.
+   Buffers are tracked with static pointers and are reserved
+   bewteen different calls of the function.
+
+   Frees the corresponding file descriptor buffer when the end of
+   file is reached. 
+   
+   List and fd_buffer may not exist (*head and *fd_buffer point to
+   NULL), in this case, the original pointer is reset to point to
+   newly allocated node/buffer. */
 void	read_until_eol_or_eof_and_save_excess(int fd, char *tmp_buffer,
 				t_str_list **head, char **fd_buffer)
 {

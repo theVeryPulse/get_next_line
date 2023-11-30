@@ -23,8 +23,8 @@
 #  define FD_MAX (4096)
 # endif
 
-/* Linked list, each node contains the character content, its offset,
-   and pointer to the next node */
+/* Linked list: Each node contains buffer for read() function
+   and a pointer to the next node */
 typedef struct s_str_list
 {
 	char				str[BUFFER_SIZE + 1];

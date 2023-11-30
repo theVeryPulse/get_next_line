@@ -12,6 +12,12 @@
 
 #include "get_next_line.h"
 
+/* Reads a line from a file descriptor and returns the line.
+
+   Uses allocated buffers to store the remainder of the read data for
+   the next call.
+   
+   Returns NULL if an error occurs or the end of the file is reached. */
 char	*get_next_line(int fd)
 {
 	char		*tmp_buffer;
@@ -38,7 +44,10 @@ char	*get_next_line(int fd)
 	return (out_str);
 }
 
-/* Cut and paste a line from (fd_buffer) into (tmp_buffer) */
+/* Extracts a line from the file descriptor buffer (fd_buffer) and
+   pastes it into the temporary buffer (tmp_buffer).
+
+   Next, moves the remaining content in the fd_buffer to the start. */
 void	cut_line_into_buffer(char *fd_buffer, char *tmp_buffer)
 {
 	int	i;
@@ -61,8 +70,9 @@ void	cut_line_into_buffer(char *fd_buffer, char *tmp_buffer)
 	fd_buffer[move] = '\0';
 }
 
-/* Copy the source string into fd_buffer. If buffer of target file
-   descriptor does not exist, allocate the memory. */
+/* Copies the source string into the buffer for file descriptor (fd_buffer).
+
+   Allocates memory for the buffer it does not exist. */
 void	save_to_fd_buffer(char **fd_buffer, char *source)
 {
 	int		i;
@@ -84,10 +94,10 @@ void	save_to_fd_buffer(char **fd_buffer, char *source)
 	dest[i] = '\0';
 }
 
-/* Copy the content from buffer until \n into a new node in the
-   list. If head points to NULL, set it to point to this new node.
-   
-   Returns 0 upon success and -1 upon failure */
+/* Copies content from the buffer until the first newline character 
+   into a new node in the list.
+
+   Sets the head to point to this new node if head points to NULL. */
 void	add_until_eol_to_list(t_str_list **head, char *buffer)
 {
 	size_t		i;
@@ -117,7 +127,7 @@ void	add_until_eol_to_list(t_str_list **head, char *buffer)
 	}
 }
 
-/* Concatenate all content from a list into a single string 
+/* Concatenates all content from a list into a single string 
 
    Returns NULL if the conversion fails. */
 char	*list_to_line(t_str_list *list)
