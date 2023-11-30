@@ -20,7 +20,7 @@ static int	get_next_line_from_fd_str_list(t_fd_str_list *fd_str_list,
 
 static int	append_current_line_to_list(t_str_list **head, char *buffer);
 
-static char	*list_to_line(t_str_list *list);
+static char	*_list_to_line(t_str_list *list);
 
 char	*get_next_line(int fd)
 {
@@ -55,9 +55,9 @@ char	*get_next_line(int fd)
 			add_to_fd_str_list(&fd_str_list, fd, buffer);
 	}
 	// Convert linked list into a string
-	string = list_to_line(list);
+	string = _list_to_line(list);
 	// Free all space taken by the list
-	free_list(list);
+	_free_list(list);
 	return (string);
 }
 
@@ -208,7 +208,7 @@ static int	append_current_line_to_list(t_str_list **head, char *buffer)
 /* Concatenate all content from a list into a single string 
 
    Returns NULL if the conversion fails. */
-static char	*list_to_line(t_str_list *list)
+static char	*_list_to_line(t_str_list *list)
 {
 	char		*string;
 	size_t		len;

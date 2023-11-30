@@ -40,7 +40,7 @@ char	*ft_strchr(const char *s, int c)
 }
 
 /* Free the entire list and the content of each node*/
-int	free_list(t_str_list *list) // [x] free_list: new struct refactor
+int	_free_list(t_str_list *list) // [x] free_list: new struct refactor
 {
 	t_str_list	*this_node;
 	t_str_list	*next_node;

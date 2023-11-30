@@ -27,7 +27,7 @@ static int	get_next_line_from_fd_str_list(t_fd_str_list *fd_str_list,
 
 static void	append_current_line_to_list(t_str_list **head, char *buffer);
 
-static char	*list_to_line(t_str_list *list);
+static char	*_list_to_line(t_str_list *list);
 
 // [ ] 28 lines
 char	*get_next_line(int fd)
@@ -57,8 +57,8 @@ char	*get_next_line(int fd)
 		if(ft_strchr(buffer, '\n'))
 			add_to_fd_str_list(&fd_str_list, fd, ft_strchr(buffer, '\n') + 1);
 	}
-	string = list_to_line(list);
-	free_all(list, buffer);
+	string = _list_to_line(list);
+	_free_all(list, buffer);
 	return (string);
 }
 
@@ -189,7 +189,7 @@ static void	append_current_line_to_list(t_str_list **head, char *buffer)
 /* Join all strings from a list into a single string 
 
    Returns NULL if the conversion fails. */
-static char	*list_to_line(t_str_list *list)
+static char	*_list_to_line(t_str_list *list)
 {
 	char		*string;
 	int			i;
@@ -199,7 +199,7 @@ static char	*list_to_line(t_str_list *list)
 	if (list == NULL)
 		return (NULL);
 	string = (char *)malloc(sizeof(char) *
-		(total_strlen_from_list(list) + 1));
+		(_total_strlen_from_list(list) + 1));
 	if (string == NULL)
 		return (NULL);
 	this_node = list;

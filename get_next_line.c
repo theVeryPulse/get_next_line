@@ -14,9 +14,9 @@
 
 /* Reads a line from a file descriptor and returns the line.
 
-   Uses allocated buffers to store the remainder of the read data for
-   the next call.
-   
+   Uses allocated buffers to store the remainder of the read data for the next
+   call.
+
    Returns NULL if an error occurs or the end of the file is reached. */
 char	*get_next_line(int fd)
 {
@@ -34,21 +34,21 @@ char	*get_next_line(int fd)
 	tmp_buffer[0] = '\0';
 	if (fd_buffer_set[fd] && fd_buffer_set[fd][0])
 	{
-		cut_line_into_buffer(fd_buffer_set[fd], tmp_buffer);
-		add_until_eol_to_list(&list, tmp_buffer);
+		_cut_line_into_buffer(fd_buffer_set[fd], tmp_buffer);
+		_add_until_eol_to_list(&list, tmp_buffer);
 	}
-	read_until_eol_or_eof_and_save_excess(fd, tmp_buffer, &list,
+	_read_until_eol_or_eof_and_save_excess(fd, tmp_buffer, &list,
 		&fd_buffer_set[fd]);
-	out_str = list_to_line(list);
-	free_all(list, tmp_buffer);
+	out_str = _list_to_line(list);
+	_free_all(list, tmp_buffer);
 	return (out_str);
 }
 
-/* Extracts a line from the file descriptor buffer (fd_buffer) and
-   pastes it into the temporary buffer (tmp_buffer).
+/* Extracts a line from the file descriptor buffer (fd_buffer) and pastes the
+   line into the temporary buffer (tmp_buffer).
 
    Next, moves the remaining content in the fd_buffer to the start. */
-void	cut_line_into_buffer(char *fd_buffer, char *tmp_buffer)
+void	_cut_line_into_buffer(char *fd_buffer, char *tmp_buffer)
 {
 	int	i;
 	int	move;
@@ -73,7 +73,7 @@ void	cut_line_into_buffer(char *fd_buffer, char *tmp_buffer)
 /* Copies the source string into the buffer for file descriptor (fd_buffer).
 
    Allocates memory for the buffer it does not exist. */
-void	save_to_fd_buffer(char **fd_buffer, char *source)
+void	_save_to_fd_buffer(char **fd_buffer, char *source)
 {
 	int		i;
 	char	*dest;
@@ -94,11 +94,11 @@ void	save_to_fd_buffer(char **fd_buffer, char *source)
 	dest[i] = '\0';
 }
 
-/* Copies content from the buffer until the first newline character 
-   into a new node in the list.
+/* Copies content from the buffer until the first newline character into a new
+   node in the list.
 
    Sets the head to point to this new node if head points to NULL. */
-void	add_until_eol_to_list(t_str_list **head, char *buffer)
+void	_add_until_eol_to_list(t_str_list **head, char *buffer)
 {
 	size_t		i;
 	t_str_list	*this_node;
@@ -130,7 +130,7 @@ void	add_until_eol_to_list(t_str_list **head, char *buffer)
 /* Concatenates all content from a list into a single string 
 
    Returns NULL if the conversion fails. */
-char	*list_to_line(t_str_list *list)
+char	*_list_to_line(t_str_list *list)
 {
 	char		*dest;
 	size_t		len;
@@ -140,7 +140,7 @@ char	*list_to_line(t_str_list *list)
 
 	if (list == NULL)
 		return (NULL);
-	len = total_strlen_from_list(list);
+	len = _total_strlen_from_list(list);
 	dest = (char *)malloc(sizeof(char) * (len + 1));
 	if (dest == NULL)
 		return (NULL);

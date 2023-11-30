@@ -23,8 +23,10 @@
 #  define FD_MAX (4096)
 # endif
 
-/* Linked list: Each node contains buffer for read() function
-   and a pointer to the next node */
+/* Linked List
+
+   Each node contains buffer for read() function and a pointer to
+   the next node */
 typedef struct s_str_list
 {
 	char				str[BUFFER_SIZE + 1];
@@ -35,22 +37,20 @@ char	*get_next_line(int fd);
 
 char	*ft_strchr(const char *s, int c);
 
-int		free_list(t_str_list *list);
+int		_free_list(t_str_list *list);
 
-int		ft_strlen(const char *s);
+int		_total_strlen_from_list(t_str_list *list);
 
-int		total_strlen_from_list(t_str_list *list);
+void	_free_all(t_str_list *list, char *buffer);
 
-void	free_all(t_str_list *list, char *buffer);
-
-void	read_until_eol_or_eof_and_save_excess(int fd, char *tmp_buffer,
+void	_read_until_eol_or_eof_and_save_excess(int fd, char *tmp_buffer,
 			t_str_list **head, char **fd_buffer);
 
-void	cut_line_into_buffer(char *fd_buffer, char *tmp_buffer);
+void	_cut_line_into_buffer(char *fd_buffer, char *tmp_buffer);
 
-void	save_to_fd_buffer(char **fd_buffer, char *source);
+void	_save_to_fd_buffer(char **fd_buffer, char *source);
 
-void	add_until_eol_to_list(t_str_list **head, char *buffer);
+void	_add_until_eol_to_list(t_str_list **head, char *buffer);
 
-char	*list_to_line(t_str_list *list);
+char	*_list_to_line(t_str_list *list);
 #endif

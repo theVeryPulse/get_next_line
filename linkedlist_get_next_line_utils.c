@@ -29,7 +29,7 @@ char	*ft_strchr(const char *s, int c)
 }
 
 /* Free the entire list and the content of each node*/
-void	free_all(t_str_list *list, char *buffer)
+void	_free_all(t_str_list *list, char *buffer)
 {
 	t_str_list	*this_node;
 	t_str_list	*next_node;
@@ -46,7 +46,7 @@ void	free_all(t_str_list *list, char *buffer)
 
 /* Return the sum of lengths of all strings saved in the entire list.
 */
-int		total_strlen_from_list(t_str_list *list)
+int		_total_strlen_from_list(t_str_list *list)
 {
 	int			i;
 	int			len;

@@ -50,12 +50,12 @@ char	*get_next_line(int fd);
 
 char	*ft_strchr(const char *s, int c);
 
-int		free_list(t_str_list *list);
+int		_free_list(t_str_list *list);
 
 int		ft_strlen(const char *s);
 
-int		total_strlen_from_list(t_str_list *list);
+int		_total_strlen_from_list(t_str_list *list);
 
-void	free_all(t_str_list *list, char *buffer);
+void	_free_all(t_str_list *list, char *buffer);
 
 #endif
