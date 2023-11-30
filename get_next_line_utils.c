@@ -6,7 +6,7 @@
 /*   By: Philip Li <LJHR.UK@outlook.com>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/18 01:23:06 by juli              #+#    #+#             */
-/*   Updated: 2023/11/29 19:50:21 by Philip Li        ###   ########.fr       */
+/*   Updated: 2023/11/30 14:42:57 by Philip Li        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,20 +28,30 @@ char	*ft_strchr(const char *s, int c)
 	return (NULL);
 }
 
-/* Frees each node of the entire list. 
-   Also frees the provided buffer. */
-void	_free_all(t_str_list *list, char *buffer)
+/* Attempts to free each node of the entire list and the provided buffer.
+   Then resets the pointer to NULL after.
+
+   Does nothing to pointers already pointing to NULL. */
+void	_free_all(t_str_list **list, char **buffer)
 {
 	t_str_list	*this_node;
 	t_str_list	*next_node;
 
-	free(buffer);
-	this_node = list;
-	while (this_node)
+	if (*buffer)
 	{
-		next_node = this_node->next;
-		free(this_node);
-		this_node = next_node;
+		free(*buffer);
+		*buffer = NULL;
+	}
+	if (*list)
+	{
+		this_node = *list;
+		while (this_node)
+		{
+			next_node = this_node->next;
+			free(this_node);
+			this_node = next_node;
+		}
+		*list = NULL;
 	}
 }
 
@@ -78,11 +88,12 @@ int	_total_strlen_from_list(t_str_list *list)
    tracked with static pointers and are reserved bewteen different calls of the
    function.
 
-   Frees the corresponding file descriptor buffer when the end of file is 
-   reached. 
-
    If list or fd_buffer does not exist (*head and *fd_buffer point to NULL),
-   resets the original pointer to point to newly allocated node/buffer. */
+   resets the original pointer to point to newly allocated node/buffer. 
+
+   Frees the corresponding file descriptor buffer when the end of file is
+   reached and resets to point to NULL. Free both the buffer and list and
+   resets both to point to NULL upon read error (when return value is -1). */
 void	_read_until_eol_or_eof_and_save_excess(int fd, char *tmp_buffer,
 				t_str_list **head, char **fd_buffer)
 {
@@ -104,5 +115,9 @@ void	_read_until_eol_or_eof_and_save_excess(int fd, char *tmp_buffer,
 	{
 		free(*fd_buffer);
 		*fd_buffer = NULL;
+	}
+	else if (chars_read == -1)
+	{
+		_free_all(head, fd_buffer);
 	}
 }

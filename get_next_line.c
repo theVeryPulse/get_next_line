@@ -6,7 +6,7 @@
 /*   By: Philip Li <LJHR.UK@outlook.com>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/22 19:57:59 by Philip Li         #+#    #+#             */
-/*   Updated: 2023/11/29 19:18:37 by Philip Li        ###   ########.fr       */
+/*   Updated: 2023/11/30 14:21:54 by Philip Li        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ char	*get_next_line(int fd)
 	_read_until_eol_or_eof_and_save_excess(fd, tmp_buffer, &list,
 		&fd_buffer_set[fd]);
 	out_str = _list_to_line(list);
-	_free_all(list, tmp_buffer);
+	_free_all(&list, &tmp_buffer);
 	return (out_str);
 }
 
